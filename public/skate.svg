@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="256"
+   height="256"
+   viewBox="0 0 67.733332 67.733333"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)"
+   sodipodi:docname="skate.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     inkscape:document-units="mm"
+     showgrid="false"
+     showborder="true"
+     inkscape:zoom="1.2428876"
+     inkscape:cx="113.84779"
+     inkscape:cy="210.79943"
+     inkscape:window-width="1280"
+     inkscape:window-height="971"
+     inkscape:window-x="-8"
+     inkscape:window-y="22"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <ellipse
+       style="fill:#23272a;fill-opacity:1;stroke-width:0.110039"
+       id="path1978"
+       cx="9.4494858"
+       cy="58.6394"
+       rx="7.2284513"
+       ry="7.4006171" />
+    <ellipse
+       style="fill:#23272a;fill-opacity:1;stroke-width:0.110039"
+       id="circle1980"
+       cx="26.088352"
+       cy="58.6394"
+       rx="7.2284513"
+       ry="7.4006171" />
+    <ellipse
+       style="fill:#23272a;fill-opacity:1;stroke-width:0.110039"
+       id="circle1982"
+       cx="42.835972"
+       cy="58.6394"
+       rx="7.2284513"
+       ry="7.4006171" />
+    <ellipse
+       style="fill:#23272a;fill-opacity:1;stroke-width:0.110039"
+       id="circle1984"
+       cx="58.822334"
+       cy="58.6394"
+       rx="7.2284513"
+       ry="7.4006171" />
+    <path
+       style="fill:#ff1454;fill-opacity:1;stroke:#ff1454;stroke-width:2.29656;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+       d="M 18.687523,2.9171395 2.8746635,47.834848 65.601642,48.067916 38.269097,27.516708 45.554998,2.8513578 Z"
+       id="path10134"
+       sodipodi:nodetypes="cccccc" />
+  </g>
+</svg>
