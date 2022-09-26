@@ -25,7 +25,7 @@ const Navbar = () => {
   return (
     <div className="w-full bg-theme-accent shadow-md h-9 lg:h-12 fixed top-0 left-0 flex flex-row items-center text-white font-bold px-4 md:px-8 lg:px-16 text-xl justify-between">
       <div>
-        <Link to="/" className="hover:text-gray-300 ease-in-out duration-300 lg:text-3xl">RCT</Link>
+        <Link to="/" className="hover:text-gray-300 ease-in-out duration-200 lg:text-3xl">RCT</Link>
       </div>
       <div className="flex flex-row gap-4">
         <a
