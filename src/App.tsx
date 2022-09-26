@@ -7,6 +7,7 @@ import Stats from "./pages/Stats";
 function App() {
   // TODO: Screen transitions
 
+  // ErrorState management
   const [errorState, setErrorState] = useState("");
   const errorHandler = (error: string) => {
     if (errorState != error) setErrorState(error);

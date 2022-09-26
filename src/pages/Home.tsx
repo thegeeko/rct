@@ -9,10 +9,9 @@ import Select from "../components/Select";
 import Button from "../components/Button";
 
 const Home = (props: Props) => {
-  // TODO: Manage error state (show and disable onchange)
-
   const navigate = useNavigate();
 
+  // Submit handler (save data to localStorage and navigate to stats)
   const submitHandler = (event: React.SyntheticEvent) => {
     event.preventDefault();
     const data = event.target as typeof event.target & {

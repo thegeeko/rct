@@ -1,15 +1,16 @@
 import { Link } from "react-router-dom";
-// import GithubIcon from "../assets/github-icon.svg";
 import MoonIcon from "./DarkModeIcon";
 import GithubIcon from "./GithubIcon";
 
 const Navbar = () => {
+  // Check if darkMode is supposed to be on by checking settings in localStorage
   const mainDiv = document.getElementById("main");
   if (localStorage.getItem("darkMode") == "true") {
     mainDiv?.classList.add("dark");
   }
 
-  const switchDarkMode = () => {
+  // Toggle darkMode and save settings in localStorage
+  const toggleDarkMode = () => {
     if (localStorage.getItem("darkMode") == "false") {
       localStorage.setItem("darkMode", "true");
     } else {
@@ -35,7 +36,7 @@ const Navbar = () => {
   
           <GithubIcon />
         </a>
-        <button onClick={switchDarkMode}>
+        <button onClick={toggleDarkMode}>
           <MoonIcon />
         </button>
       </div>
