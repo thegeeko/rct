@@ -30,10 +30,10 @@ const Home = (props: Props) => {
     <form onSubmit={submitHandler}>
       <div className="flex gap-12 md:gap-8 2xl:gap-14 flex-col w-full h-full text-center items-center mt-20 md:mt-12 lg:mt-20 overflow-x-hidden">
         <div className="mx-2 md:mx-4 text-base sm:text-lg md:text-xl 2xl:text-4xl ease-in-out duration-200">
-          <div className="font-extrabold text-theme-accent">
+          <div className="font-extrabold text-theme-accent xl:text-2xl 2xl:text-4xl">
             ROLLER CHAMPIONS TRACKER
           </div>
-          <div className="dark:text-white ease-in-out duration-200">
+          <div className="dark:text-white ease-in-out duration-200 xl:text-2xl 2xl:text-4xl">
             Stat tracker for Roller Champions
           </div>
         </div>
