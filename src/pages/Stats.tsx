@@ -1,8 +1,9 @@
+import { useSearchParams, Navigate } from "react-router-dom";
+import NavBar from "../components/Navbar";
+
 interface Props {
   setErrorState(error: string): void;
 }
-
-import { useSearchParams, Navigate } from "react-router-dom";
 
 const Stats = (props: Props) => {
   // TODO: Show loading sceen
@@ -22,7 +23,8 @@ const Stats = (props: Props) => {
   // TODO: Reroute to home if user not found
 
   return (
-    <div className="mt-10 lg:mt-11 xl:mt-12 dark:text-white">
+    <div className="mt-20 md:mt-11 xl:mt-12 dark:text-white">
+      <NavBar searchBar />
       {username} {platform}
     </div>
   );

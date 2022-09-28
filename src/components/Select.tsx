@@ -1,7 +1,7 @@
 interface Params {
   label?: string;
   className?: string;
-  devClassName?: string;
+  divClassName?: string;
   onErrorRemove?(error: string): void;
 }
 
@@ -17,7 +17,7 @@ const Select = (props: Params) => {
       className={
         "flex flex-col w-5/6 sm:w-72 md:w-96 2xl:w-[36rem] gap-1" +
         " " +
-        props.devClassName
+        props.divClassName
       }
     >
       {props.label && (
