@@ -7,7 +7,7 @@ const Icon = () => {
       version="1.1"
       id="svg5"
       xmlns="http://www.w3.org/2000/svg"
-      className="ease-in-out duration-200 fill-white dark:fill-black md:hover:fill-slate-400 h-7 w-7 lg:h-8 lg:w-8 xl:h-9 xl:w-9"
+      className="ease-in-out duration-200 fill-white dark:fill-black md:hover:fill-slate-400 h-7 w-7"
     >
       <defs id="defs2" />
       <g id="layer1">

@@ -6,8 +6,6 @@ interface Params {
 }
 
 const Select = (props: Params) => {
-  // TODO: Style dropdown menu
-
   const errorRemovalHandler = () => {
     if (props.onErrorRemove) props.onErrorRemove("");
   };
@@ -28,7 +26,7 @@ const Select = (props: Params) => {
 
       <select
         className={
-          "px-2 md:px-4 text-lg h-8 2xl:h-14 2xl:text-3xl bg-white shadow-lg border outline-none focus:border-theme-accent ease-in-out duration-200" +
+          "px-2 md:px-4 text-lg h-8 2xl:h-14 2xl:text-3xl bg-white shadow-lg border outline-none hover:border-theme-accent ease-in-out duration-200" +
           " " +
           props.className
         }

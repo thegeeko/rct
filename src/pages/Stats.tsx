@@ -23,7 +23,7 @@ const Stats = (props: Props) => {
   // TODO: Reroute to home if user not found
 
   return (
-    <div className="mt-20 md:mt-11 xl:mt-12 dark:text-white">
+    <div className="mt-20 md:mt-11 xl:mt-12 dark:text-white select-none">
       <NavBar searchBar />
       {username} {platform}
     </div>

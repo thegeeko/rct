@@ -52,19 +52,19 @@ const Navbar = (props: Props) => {
   // Navbar searchbar
   const SearchUtil = (
     <form onSubmit={submitHandler} className="hidden md:block">
-      <div className="flex flex-row gap-0 justify-center md:h-6 xl:h-8">
+      <div className="flex flex-row gap-0 justify-center md:h-6 ">
         <Select
-          className="rounded-r-none font-normal text-black !text-xs !px-1 text-center"
+          className="rounded-r-none font-normal text-black !text-xs !px-1 text-center !shadow-none border-r-white"
           divClassName="!w-3/12 text-center"
         />
         <Input
           placeHolder="Username"
-          className="rounded-none font-normal text-black !text-base !px-1"
+          className="rounded-none font-normal text-black !text-base !px-1 !shadow-none border-l-white"
           divClassName="!w-3/6"
         />
         <Button
           type="submit"
-          className="rounded-l-none !w-3/12 m-0 md:h-6 xl:h-8 2xl:h-8 rounded-r-lg !text-lg !leading-none"
+          className="rounded-l-none !w-3/12 m-0 !h-6 rounded-r-lg !text-lg !leading-none !shadow-none"
         >
           ROLL
         </Button>
@@ -77,17 +77,17 @@ const Navbar = (props: Props) => {
       <form onSubmit={submitHandler}>
         <div className="flex flex-row gap-0 w-full justify-center">
           <Select
-            className="rounded-r-none h-6 font-normal 2xl:h-8 text-black !text-xs !px-1 text-center"
+            className="rounded-r-none h-6 font-normal 2xl:h-8 text-black !text-xs !shadow-none !px-1 text-center border-r-white"
             divClassName="!w-2/12 text-center"
           />
           <Input
             placeHolder="Username"
-            className="rounded-none h-6 font-normal 2xl:h-8 text-black !text-base !px-1"
+            className="rounded-none h-6 font-normal 2xl:h-8 text-black !shadow-none !text-base !px-1 border-l-white"
             divClassName="!w-5/12"
           />
           <Button
             type="submit"
-            className="rounded-l-none h-6 2xl:h-8 !w-2/12 m-0 rounded-r-md !text-sm !leading-none"
+            className="rounded-l-none h-6 2xl:h-8 !w-2/12 m-0 rounded-r-md !shadow-none !text-sm !leading-none"
           >
             ROLL
           </Button>
@@ -98,20 +98,20 @@ const Navbar = (props: Props) => {
 
   return (
     <>
-      <div className="w-full bg-black dark:bg-white shadow-md h-9 lg:h-10 xl:h-12 fixed top-0 left-0 flex flex-row items-center text-white font-bold px-4 md:px-6 lg:px-16 text-xl justify-between">
+      <div className="w-full bg-black dark:bg-white shadow-md h-9 fixed top-0 left-0 flex flex-row items-center text-white font-bold px-4 md:px-6 lg:px-16 text-xl justify-between select-none">
         <div>
           <Link
             to="/"
-            className="ease-in-out duration-200 lg:text-3xl xl:text-3xl flex flex-row items-center"
+            className="ease-in-out duration-200 text-2xl flex flex-row items-center"
           >
             <LogoIcon />
-            <span className="dark:text-black ease-in-out duration-200">
+            <span className="dark:text-black ease-in-out duration-200 font-extrabold">
               RCT
             </span>
           </Link>
         </div>
+        <div className="flex flex-row gap-4 items-center">
         {props.searchBar && SearchUtil}
-        <div className="flex flex-row gap-4">
           <a
             href="https://github.com/OmarQurashi868/rct"
             target="_blank"

@@ -7,7 +7,7 @@ const GithubIcon = () => {
       version="1.1"
       id="svg5321"
       xmlns="http://www.w3.org/2000/svg"
-      className="md:hover:fill-slate-400 fill-white dark:fill-black ease-in-out duration-200 h-7 w-7 lg:h-8 lg:w-8 xl:h-9 xl:w-9"
+      className="md:hover:fill-slate-400 fill-white dark:fill-black ease-in-out duration-200 h-7 w-7"
     >
       <defs id="defs5318" />
       <g id="layer1">
