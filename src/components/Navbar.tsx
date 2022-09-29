@@ -54,17 +54,17 @@ const Navbar = (props: Props) => {
     <form onSubmit={submitHandler} className="hidden md:block">
       <div className="flex flex-row gap-0 justify-center md:h-6 xl:h-8">
         <Select
-          className="rounded-r-none font-normal text-black border-r-2 !text-xs !px-1 text-center"
+          className="rounded-r-none font-normal text-black !text-xs !px-1 text-center"
           divClassName="!w-3/12 text-center"
         />
         <Input
           placeHolder="Username"
-          className="rounded-none font-normal text-black border-r-2 !text-base !px-1"
+          className="rounded-none font-normal text-black !text-base !px-1"
           divClassName="!w-3/6"
         />
         <Button
           type="submit"
-          className="rounded-l-none !w-3/12 m-0 md:h-6 xl:h-8 2xl:h-8 bg-theme-accent-dark rounded-r-lg !text-lg"
+          className="rounded-l-none !w-3/12 m-0 md:h-6 xl:h-8 2xl:h-8 rounded-r-lg !text-lg !leading-none"
         >
           ROLL
         </Button>
@@ -73,21 +73,21 @@ const Navbar = (props: Props) => {
   );
 
   const MobileSearchUtil = (
-    <div className="md:hidden w-full bg-theme-accent-dark shadow-md h-9 lg:h-10 xl:h-12 fixed top-9 lg:top-10 xl:top-12 left-0 flex flex-row justify-center items-center text-white font-bold px-2 md:px-4 lg:px-10 text-xl">
+    <div className="md:hidden w-full bg-gray-900 dark:bg-gray-300 ease-in-out duration-200 shadow-md h-9 lg:h-10 xl:h-12 fixed top-9 lg:top-10 xl:top-12 left-0 flex flex-row justify-center items-center text-white font-bold px-2 md:px-4 lg:px-10 text-xl">
       <form onSubmit={submitHandler}>
         <div className="flex flex-row gap-0 w-full justify-center">
           <Select
-            className="rounded-r-none h-6 font-normal 2xl:h-8 text-black border-r-2 !text-xs !px-1 text-center"
+            className="rounded-r-none h-6 font-normal 2xl:h-8 text-black !text-xs !px-1 text-center"
             divClassName="!w-2/12 text-center"
           />
           <Input
             placeHolder="Username"
-            className="rounded-none h-6 font-normal 2xl:h-8 text-black border-r-2 !text-base !px-1"
+            className="rounded-none h-6 font-normal 2xl:h-8 text-black !text-base !px-1"
             divClassName="!w-5/12"
           />
           <Button
             type="submit"
-            className="rounded-l-none h-6 2xl:h-8 !w-2/12 m-0 bg-theme-accent rounded-r-lg !text-base"
+            className="rounded-l-none h-6 2xl:h-8 !w-2/12 m-0 rounded-r-md !text-sm !leading-none"
           >
             ROLL
           </Button>
@@ -98,14 +98,16 @@ const Navbar = (props: Props) => {
 
   return (
     <>
-      <div className="w-full bg-theme-accent shadow-md h-9 lg:h-10 xl:h-12 fixed top-0 left-0 flex flex-row items-center text-white font-bold px-4 md:px-6 lg:px-16 text-xl justify-between">
+      <div className="w-full bg-black dark:bg-white shadow-md h-9 lg:h-10 xl:h-12 fixed top-0 left-0 flex flex-row items-center text-white font-bold px-4 md:px-6 lg:px-16 text-xl justify-between">
         <div>
           <Link
             to="/"
             className="ease-in-out duration-200 lg:text-3xl xl:text-3xl flex flex-row items-center"
           >
             <LogoIcon />
-            RCT
+            <span className="dark:text-black ease-in-out duration-200">
+              RCT
+            </span>
           </Link>
         </div>
         {props.searchBar && SearchUtil}

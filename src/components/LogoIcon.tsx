@@ -7,7 +7,7 @@ const LogoIcon = () => {
       version="1.1"
       id="svg5321"
       xmlns="http://www.w3.org/2000/svg"
-      className="ease-in-out duration-200 h-7 w-7 lg:h-8 lg:w-8 xl:h-9 xl:w-9 mr-1"
+      className="ease-in-out duration-200 h-7 w-7 lg:h-8 lg:w-8 xl:h-9 xl:w-9 mr-1 fill-theme-accent"
     >
       <defs id="defs5318" />
       <g id="layer1">
