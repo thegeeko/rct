@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import Button from "./Button";
 import MoonIcon from "./DarkModeIcon";
 import GithubIcon from "./GithubIcon";
@@ -52,7 +53,13 @@ const Navbar = (props: Props) => {
   // Navbar searchbar
   const SearchUtil = (
     <form onSubmit={submitHandler} className="hidden md:block">
-      <div className="flex flex-row gap-0 justify-center md:h-6 ">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.25 }}
+        className="flex flex-row gap-0 justify-center md:h-6 "
+      >
         <Select
           className="rounded-r-none font-normal text-black !text-xs !px-1 text-center !shadow-none border-r-white"
           divClassName="!w-3/12 text-center"
@@ -68,12 +75,18 @@ const Navbar = (props: Props) => {
         >
           ROLL
         </Button>
-      </div>
+      </motion.div>
     </form>
   );
 
   const MobileSearchUtil = (
-    <div className="md:hidden w-full bg-gray-900 dark:bg-gray-300 ease-in-out duration-200 shadow-md h-9 lg:h-10 xl:h-12 fixed top-9 lg:top-10 xl:top-12 left-0 flex flex-row justify-center items-center text-white font-bold px-2 md:px-4 lg:px-10 text-xl">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.25 }}
+      className="md:hidden w-full bg-gray-900 dark:bg-gray-300 ease-in-out duration-200 shadow-md h-9 lg:h-10 xl:h-12 fixed top-9 lg:top-10 xl:top-12 left-0 flex flex-row justify-center items-center text-white font-bold px-2 md:px-4 lg:px-10 text-xl"
+    >
       <form onSubmit={submitHandler}>
         <div className="flex flex-row gap-0 w-full justify-center">
           <Select
@@ -93,7 +106,7 @@ const Navbar = (props: Props) => {
           </Button>
         </div>
       </form>
-    </div>
+    </motion.div>
   );
 
   return (
@@ -111,7 +124,7 @@ const Navbar = (props: Props) => {
           </Link>
         </div>
         <div className="flex flex-row gap-4 items-center">
-        {props.searchBar && SearchUtil}
+          {props.searchBar && SearchUtil}
           <a
             href="https://github.com/OmarQurashi868/rct"
             target="_blank"

@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import Input from "../components/Input";
 import Select from "../components/Select";
 import Button from "../components/Button";
@@ -31,7 +32,13 @@ const Home = (props: Props) => {
     <>
       <NavBar />
       <form onSubmit={submitHandler}>
-        <div className="flex gap-12 md:gap-8 2xl:gap-14 flex-col w-full h-full text-center items-center mt-20 md:mt-12 lg:mt-20 overflow-x-hidden select-none">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.25 }}
+          className="flex gap-4 md:gap-8 2xl:gap-14 flex-col w-full h-full text-center items-center mt-12 md:mt-12 lg:mt-20 overflow-x-hidden select-none"
+        >
           <div className="mx-2 md:mx-4 text-base sm:text-lg md:text-xl 2xl:text-4xl ease-in-out duration-200">
             <div className="font-extrabold text-theme-accent xl:text-2xl 2xl:text-4xl">
               ROLLER CHAMPIONS TRACKER
@@ -54,7 +61,7 @@ const Home = (props: Props) => {
             <Select label="Platform" onErrorRemove={props.setErrorState} />
           </div>
           <Button type="submit">ROLL</Button>
-        </div>
+        </motion.div>
       </form>
     </>
   );

@@ -1,12 +1,19 @@
+import { useState } from "react";
 import { useSearchParams, Navigate } from "react-router-dom";
+import LoadingScreen from "../components/LoadingScreen";
 import NavBar from "../components/Navbar";
+import { motion } from "framer-motion";
 
 interface Props {
   setErrorState(error: string): void;
 }
 
 const Stats = (props: Props) => {
-  // TODO: Show loading sceen
+  const [isLoading, setIsLoading] = useState(true);
+  const [isLonger, setIsLonger] = useState(false);
+
+  // TODO: Check if state persists on refresh
+  const [userData, setUserData] = useState({});
 
   // Get data from URL search parameters
   const [searchParams] = useSearchParams();
@@ -20,12 +27,30 @@ const Stats = (props: Props) => {
   }
 
   // TODO: Fetch data
-  // TODO: Reroute to home if user not found
+  // TODO: Reroute to home/previous stats page if user not found
+
+  // Show loading sceen
+  if (isLoading) {
+    return (
+      <>
+        <NavBar />
+        <LoadingScreen isLonger={isLonger} />
+      </>
+    );
+  }
 
   return (
-    <div className="mt-20 md:mt-11 xl:mt-12 dark:text-white select-none">
+    <div>
       <NavBar searchBar />
-      {username} {platform}
+      <motion.div
+        className="mt-20 md:mt-11 xl:mt-12 dark:text-white select-none"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.25 }}
+      >
+        {username} {platform}
+      </motion.div>
     </div>
   );
 };
