@@ -48,6 +48,7 @@ const Navbar = (props: Props) => {
     navigate(
       `/stats?username=${data.username.value}&platform=${data.platform.value}`
     );
+    window.location.reload();
   };
 
   // Navbar searchbar

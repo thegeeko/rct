@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSearchParams, Navigate } from "react-router-dom";
 import LoadingScreen from "../components/LoadingScreen";
 import NavBar from "../components/Navbar";
 import { motion } from "framer-motion";
+// @ts-ignore
+import Parse from "parse/dist/parse.min.js";
 
 interface Props {
   setErrorState(error: string): void;
@@ -12,8 +14,7 @@ const Stats = (props: Props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isLonger, setIsLonger] = useState(false);
 
-  // TODO: Check if state persists on refresh
-  const [userData, setUserData] = useState({});
+  const [userData, setUserData] = useState();
 
   // Get data from URL search parameters
   const [searchParams] = useSearchParams();
@@ -26,8 +27,23 @@ const Stats = (props: Props) => {
     return <Navigate to="/" />;
   }
 
-  // TODO: Fetch data
-  // TODO: Reroute to home/previous stats page if user not found
+  // Fetch data
+  useEffect(() => {
+    // Cloud function to get data
+    const fetchData = async () => {
+      const res = await Parse.Cloud.run("fetchData", { username, platform });
+      console.log(res);
+      if (res != "404") {
+        setUserData(res);
+        setIsLoading(false);
+      } else {
+        // Reroute to home/previous stats page if user not found
+        props.setErrorState("User was not found");
+        return <Navigate to="/" />;
+      }
+    };
+    fetchData();
+  }, []);
 
   // Show loading sceen
   if (isLoading) {
@@ -49,7 +65,7 @@ const Stats = (props: Props) => {
         exit={{ opacity: 0 }}
         transition={{ duration: 0.25 }}
       >
-        {username} {platform}
+        {/* TODO: Pass data down to stat viewers */}
       </motion.div>
     </div>
   );
