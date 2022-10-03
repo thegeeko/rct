@@ -29,6 +29,7 @@ const Stats = (props: Props) => {
 
   // Fetch data
   useEffect(() => {
+    // TODO: Change to regular fetch
     // Cloud function to get data
     const fetchData = async () => {
       const res = await Parse.Cloud.run("fetchData", { username, platform });
