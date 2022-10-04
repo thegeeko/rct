@@ -1,10 +1,6 @@
 import { motion } from "framer-motion";
 
-interface Props {
-  isLonger?: Boolean;
-}
-
-const LoadingScreen = (props: Props) => {
+const LoadingScreen = () => {
   return (
     <motion.div
       className="h-screen flex flex-col justify-center items-center select-none"
@@ -17,11 +13,6 @@ const LoadingScreen = (props: Props) => {
         <div className="border-4 w-6 h-6 animate-spin border-black dark:border-white !border-t-transparent rounded-3xl"></div>
         Fetching...
       </div>
-      {props.isLonger && (
-        <div className="text-sm italic text-gray-500">
-          This will take longer; new token is being generated...
-        </div>
-      )}
     </motion.div>
   );
 };

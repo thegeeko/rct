@@ -49,9 +49,9 @@ const Home = (props: Props) => {
           </div>
           <div className="flex flex-col items-center gap-6 mx-2">
             {props.errorState && (
-              <span className="text-red-600 self-start text-sm lg:text-lg">
+              <div className="text-red-600 self-start text-sm lg:text-lg">
                 {props.errorState}
-              </span>
+              </div>
             )}
             <Input
               placeHolder="Username"
