@@ -14,7 +14,7 @@ const Stats = (props: Props) => {
   const [isLoading, setIsLoading] = useState(true);
 
   const [rawData, setRawData] = useState(DataSchema);
-  const [viewMode, setViewMode] = useState("Global");
+  const [viewMode, setViewMode] = useState(localStorage.getItem("viewMode") || "ranked");
 
   const navigate = useNavigate();
 
@@ -65,7 +65,7 @@ const Stats = (props: Props) => {
         },
         {
           name: "TOTAL PLAYTIME",
-          value: `${Math.trunc(
+          value: `${Math.round(
             Number(rawData.playtimeAbsolute.value) / 3600
           )} Hrs`,
         }
@@ -96,32 +96,14 @@ const Stats = (props: Props) => {
       let playtimeName;
 
       // Cosmetic collection
-      let collectName = "progressionCollection";
+      let collectName = "progressionCollection" as keyof typeof rawData;
 
       // Contracts completed
       let contractName =
-        "progressionSponsorContractsCompletion.stopreason.Completion";
+        "progressionSponsorContractsCompletion.stopreason.Completion" as keyof typeof rawData;
 
       // Total fans
-      let fanName = "progressionTotalFans";
-
-      // Matches played in arenas
-      interface IArenaData {
-        Acapulco: string;
-      }
-      let arenaData: IArenaData = { Acapulco: "0" };
-      Object.keys(rawData)
-        .filter((key) =>
-          key.startsWith("progressionEnvironmentPlayedSpecific.map.Arena_")
-        )
-        .forEach((e) => {
-          let name = e.substring(47);
-          if (name == "8") name = "Arena 8";
-
-          let value = rawData[e as keyof typeof rawData].value;
-
-          arenaData[name as keyof typeof arenaData] = value;
-        });
+      let fanName = "progressionTotalFans" as keyof typeof rawData;
 
       // Adjust keys according to selected viewMode
       if (viewMode == "Global") {
@@ -177,23 +159,158 @@ const Stats = (props: Props) => {
           `progressionPlaytimeGamemode.gamemodeid.${viewMode}` as keyof typeof rawData;
       }
 
-      // TODO: Feed data for second block (averages)
-      statistics.push({
-        name: "WINRATE",
-        value: `${Math.trunc(
-          (Number(rawData[resultWinName].value) /
-            Number(rawData[matchName].value)) *
-            100
-        )}%`,
-      });
+      // Feed data for second block (averages)
+      statistics.push(
+        {
+          name: "WINRATE",
+          value: `${Math.round(
+            (Number(rawData[resultWinName].value) /
+              Number(rawData[matchName].value)) *
+              100
+          )}%`,
+        },
+        {
+          name: "PASSES PER GAME",
+          value: `${Math.round(
+            Number(rawData[passName].value) / Number(rawData[matchName].value)
+          )}`,
+        },
+        {
+          name: "TACKLES PER GAME",
+          value: `${Math.round(
+            Number(rawData[tackleName].value) / Number(rawData[matchName].value)
+          )}`,
+        },
+        {
+          name: "POINTS PER GAME",
+          value: `${Math.round(
+            (Number(rawData[onePointName].value) +
+              3 * Number(rawData[threePointName].value) +
+              5 * Number(rawData[fivePointName].value)) /
+              Number(rawData[matchName].value)
+          )}`,
+        },
+        {
+          name: "DODGES PER GAME",
+          value: `${Math.round(
+            Number(rawData[dodgeName].value) / Number(rawData[matchName].value)
+          )}`,
+        },
+        {
+          name: "GATES PASSED PER GAME",
+          value: `${Math.round(
+            Number(rawData[gateName].value) / Number(rawData[matchName].value)
+          )}`,
+        }
+      );
 
-      // TODO: Feed data for third block (other)
-      allData.push({
-        name: "WINRATE",
-        value: rawData.tsrmeandef.value.toLocaleString(),
-      });
+      // Feed data for third block (other)
+      allData.push(
+        {
+          name: "MMR",
+          value: rawData[mmrName].value.toLocaleString(),
+        },
+        {
+          name: "PLAYTIME",
+          value: `${Math.round(
+            Number(rawData[playtimeName].value) / 3600
+          )} Hrs`,
+        },
+        {
+          name: "COSMETIC ITEMS",
+          value: rawData[collectName].value.toLocaleString(),
+        },
+        {
+          name: "SPONSER CONTRACTS COMPLETED",
+          value: rawData[contractName].value.toLocaleString(),
+        },
+        {
+          name: "MATCHES PLAYED",
+          value: rawData[matchName].value.toLocaleString(),
+        },
+        {
+          name: "MATCHES WON",
+          value: rawData[resultWinName].value.toLocaleString(),
+        },
+        {
+          name: "MATCHES LOST",
+          value: (
+            Number(rawData[matchName].value) -
+            Number(rawData[resultWinName].value) -
+            Number(rawData[resultDrawName]?.value || "0")
+          ).toLocaleString(),
+        },
+        {
+          name: "DRAWS",
+          value: rawData[resultDrawName]?.value.toLocaleString() || "N/A",
+        },
+        {
+          name: "GOALS",
+          value: rawData[goalName].value.toLocaleString(),
+        },
+        {
+          name: "1PT GOALS",
+          value: rawData[onePointName].value.toLocaleString(),
+        },
+        {
+          name: "3PT GOALS",
+          value: rawData[threePointName].value.toLocaleString(),
+        },
+        {
+          name: "5PT GOALS",
+          value: rawData[fivePointName].value.toLocaleString(),
+        },
+        {
+          name: "SUCCESSFUL PASSES",
+          value: rawData[passName].value.toLocaleString(),
+        },
+        {
+          name: "SUCCESSFUL TACKLES",
+          value: rawData[tackleName].value.toLocaleString(),
+        },
+        {
+          name: "DODGES",
+          value: rawData[dodgeName].value.toLocaleString(),
+        },
+        {
+          name: "STUNS (TACKLES RECEIVED)",
+          value: rawData[stunName].value.toLocaleString(),
+        },
+        {
+          name: "EMOTES DONE",
+          value: rawData[emoteName].value.toLocaleString(),
+        },
+        {
+          name: "GATES PASSED",
+          value: rawData[gateName].value.toLocaleString(),
+        },
+        {
+          name: "DISTANCE TRAVELLED",
+          value: rawData[distanceName].value.toLocaleString(),
+        }
+      );
 
-      // TODO: Feed data for fourth block (arenas)
+      // Feed data for fourth block (arenas)
+      // Matches played in arenas
+      interface IArenaData {
+        name: string;
+        value: string;
+      }
+      let arenaData: IArenaData[] = [];
+      Object.keys(rawData)
+        .filter((key) =>
+          key.startsWith("progressionEnvironmentPlayedSpecific.map.Arena_")
+        )
+        .forEach((e) => {
+          let name = e.substring(47);
+          if (name == "8") name = "Arena 8";
+
+          let value = rawData[e as keyof typeof rawData].value;
+
+          arenaData.push({ name: name, value: value });
+        });
+
+        console.log(generalData, statistics, allData, arenaData);
 
       setIsLoading(false);
     }
