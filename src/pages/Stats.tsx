@@ -5,16 +5,37 @@ import NavBar from "../components/Navbar";
 import { motion } from "framer-motion";
 import Axios from "axios";
 import DataSchema from "../components/DataSchema";
+import StatBlock from "../components/StatBlock";
 
 interface Props {
   setErrorState(error: string): void;
 }
 
+interface Item {
+  name: string;
+  value: string | number;
+}
+
 const Stats = (props: Props) => {
   const [isLoading, setIsLoading] = useState(true);
 
+  const [generalData, setGeneralData] = useState<Item[]>([
+    { name: "LOADING", value: "LOADING" },
+  ]);
+  const [statistics, setStatistics] = useState<Item[]>([
+    { name: "LOADING", value: "LOADING" },
+  ]);
+  const [allData, setAllData] = useState<Item[]>([
+    { name: "LOADING", value: "LOADING" },
+  ]);
+  const [arenaData, setArenaData] = useState<Item[]>([
+    { name: "LOADING", value: "LOADING" },
+  ]);
+
   const [rawData, setRawData] = useState(DataSchema);
-  const [viewMode, setViewMode] = useState(localStorage.getItem("viewMode") || "ranked");
+  const [viewMode, setViewMode] = useState(
+    localStorage.getItem("viewMode") || "Ranked"
+  );
 
   const navigate = useNavigate();
 
@@ -36,6 +57,7 @@ const Stats = (props: Props) => {
         params: { username: username, platform: platform },
       })
         .then((response) => {
+          console.log(response.data.stats);
           setRawData(response.data.stats);
         })
         .catch((error) => {
@@ -44,30 +66,31 @@ const Stats = (props: Props) => {
         });
     };
     fetchData();
-  }, [username, platform]);
+  }, []);
 
   useEffect(() => {
-    if (rawData) {
-      // Init vars
-      let generalData = [];
-      let statistics = [];
-      let allData = [];
+    // Init vars
+    let generalDataRaw = [];
+    let statisticsRaw = [];
+    let allDataRaw = [];
 
+    if (rawData) {
       // Feed data for first block (general)
-      generalData.push(
+      generalDataRaw.push(
         {
           name: "SKILL RATING",
-          value: rawData.tsrmeandef.value.toLocaleString() || "N/A",
+          value: rawData.tsrmeandef?.value.toLocaleString() || "N/A",
         },
         {
           name: "TOTAL FANS",
-          value: rawData.progressionTotalFans.value.toLocaleString(),
+          value: rawData.progressionTotalFans?.value.toLocaleString() || "N/A",
         },
         {
           name: "TOTAL PLAYTIME",
-          value: `${Math.round(
-            Number(rawData.playtimeAbsolute.value) / 3600
-          )} Hrs`,
+          value:
+            `${Math.round(
+              Number(rawData.playtimeAbsolute?.value) / 3600
+            )} Hrs` || "N/A",
         }
       );
 
@@ -160,85 +183,96 @@ const Stats = (props: Props) => {
       }
 
       // Feed data for second block (averages)
-      statistics.push(
+      statisticsRaw.push(
         {
           name: "WINRATE",
-          value: `${Math.round(
-            (Number(rawData[resultWinName].value) /
-              Number(rawData[matchName].value)) *
-              100
-          )}%`,
+          value:
+            `${Math.round(
+              (Number(rawData[resultWinName]?.value) /
+                Number(rawData[matchName]?.value)) *
+                100
+            )}%` || "N/A",
         },
         {
           name: "PASSES PER GAME",
-          value: `${Math.round(
-            Number(rawData[passName].value) / Number(rawData[matchName].value)
-          )}`,
+          value:
+            `${Math.round(
+              Number(rawData[passName]?.value) /
+                Number(rawData[matchName]?.value)
+            )}` || "N/A",
         },
         {
           name: "TACKLES PER GAME",
-          value: `${Math.round(
-            Number(rawData[tackleName].value) / Number(rawData[matchName].value)
-          )}`,
+          value:
+            `${Math.round(
+              Number(rawData[tackleName]?.value) /
+                Number(rawData[matchName]?.value)
+            )}` || "N/A",
         },
         {
           name: "POINTS PER GAME",
-          value: `${Math.round(
-            (Number(rawData[onePointName].value) +
-              3 * Number(rawData[threePointName].value) +
-              5 * Number(rawData[fivePointName].value)) /
-              Number(rawData[matchName].value)
-          )}`,
+          value:
+            `${Math.round(
+              (Number(rawData[onePointName]?.value) +
+                3 * Number(rawData[threePointName]?.value) +
+                5 * Number(rawData[fivePointName]?.value)) /
+                Number(rawData[matchName]?.value)
+            )}` || "N/A",
         },
         {
           name: "DODGES PER GAME",
-          value: `${Math.round(
-            Number(rawData[dodgeName].value) / Number(rawData[matchName].value)
-          )}`,
+          value:
+            `${Math.round(
+              Number(rawData[dodgeName]?.value) /
+                Number(rawData[matchName]?.value)
+            )}` || "N/A",
         },
         {
           name: "GATES PASSED PER GAME",
-          value: `${Math.round(
-            Number(rawData[gateName].value) / Number(rawData[matchName].value)
-          )}`,
+          value:
+            `${Math.round(
+              Number(rawData[gateName]?.value) /
+                Number(rawData[matchName]?.value)
+            )}` || "N/A",
         }
       );
 
       // Feed data for third block (other)
-      allData.push(
+      allDataRaw.push(
         {
           name: "MMR",
-          value: rawData[mmrName].value.toLocaleString(),
+          value: rawData[mmrName]?.value.toLocaleString() || "N/A",
         },
         {
           name: "PLAYTIME",
-          value: `${Math.round(
-            Number(rawData[playtimeName].value) / 3600
-          )} Hrs`,
+          value:
+            `${Math.round(Number(rawData[playtimeName]?.value) / 3600)} Hrs` ||
+            "N/A",
         },
         {
           name: "COSMETIC ITEMS",
-          value: rawData[collectName].value.toLocaleString(),
+          value: rawData[collectName]?.value.toLocaleString() || "N/A",
         },
         {
           name: "SPONSER CONTRACTS COMPLETED",
-          value: rawData[contractName].value.toLocaleString(),
+          value: rawData[contractName]?.value.toLocaleString() || "N/A",
         },
         {
           name: "MATCHES PLAYED",
-          value: rawData[matchName].value.toLocaleString(),
+          value: rawData[matchName]?.value.toLocaleString() || "N/A",
         },
         {
           name: "MATCHES WON",
-          value: rawData[resultWinName].value.toLocaleString(),
+          value: rawData[resultWinName]?.value.toLocaleString() || "N/A",
         },
         {
           name: "MATCHES LOST",
-          value: (
-            Number(rawData[matchName].value) -
-            Number(rawData[resultWinName].value) -
-            Number(rawData[resultDrawName]?.value || "0")
-          ).toLocaleString(),
+          value:
+            (
+              Number(rawData[matchName]?.value) -
+              Number(rawData[resultWinName]?.value) -
+              Number(rawData[resultDrawName]?.value || "0")
+            ).toLocaleString() || "N/A",
         },
         {
           name: "DRAWS",
@@ -246,47 +280,47 @@ const Stats = (props: Props) => {
         },
         {
           name: "GOALS",
-          value: rawData[goalName].value.toLocaleString(),
+          value: rawData[goalName]?.value.toLocaleString() || "N/A",
         },
         {
           name: "1PT GOALS",
-          value: rawData[onePointName].value.toLocaleString(),
+          value: rawData[onePointName]?.value.toLocaleString() || "N/A",
         },
         {
           name: "3PT GOALS",
-          value: rawData[threePointName].value.toLocaleString(),
+          value: rawData[threePointName]?.value.toLocaleString() || "N/A",
         },
         {
           name: "5PT GOALS",
-          value: rawData[fivePointName].value.toLocaleString(),
+          value: rawData[fivePointName]?.value.toLocaleString() || "N/A",
         },
         {
           name: "SUCCESSFUL PASSES",
-          value: rawData[passName].value.toLocaleString(),
+          value: rawData[passName]?.value.toLocaleString() || "N/A",
         },
         {
           name: "SUCCESSFUL TACKLES",
-          value: rawData[tackleName].value.toLocaleString(),
+          value: rawData[tackleName]?.value.toLocaleString() || "N/A",
         },
         {
           name: "DODGES",
-          value: rawData[dodgeName].value.toLocaleString(),
+          value: rawData[dodgeName]?.value.toLocaleString() || "N/A",
         },
         {
           name: "STUNS (TACKLES RECEIVED)",
-          value: rawData[stunName].value.toLocaleString(),
+          value: rawData[stunName]?.value.toLocaleString() || "N/A",
         },
         {
           name: "EMOTES DONE",
-          value: rawData[emoteName].value.toLocaleString(),
+          value: rawData[emoteName]?.value.toLocaleString() || "N/A",
         },
         {
           name: "GATES PASSED",
-          value: rawData[gateName].value.toLocaleString(),
+          value: rawData[gateName]?.value.toLocaleString() || "N/A",
         },
         {
           name: "DISTANCE TRAVELLED",
-          value: rawData[distanceName].value.toLocaleString(),
+          value: rawData[distanceName]?.value.toLocaleString() || "N/A",
         }
       );
 
@@ -296,7 +330,7 @@ const Stats = (props: Props) => {
         name: string;
         value: string;
       }
-      let arenaData: IArenaData[] = [];
+      let arenaDataRaw: IArenaData[] = [];
       Object.keys(rawData)
         .filter((key) =>
           key.startsWith("progressionEnvironmentPlayedSpecific.map.Arena_")
@@ -305,16 +339,26 @@ const Stats = (props: Props) => {
           let name = e.substring(47);
           if (name == "8") name = "Arena 8";
 
-          let value = rawData[e as keyof typeof rawData].value;
+          let value = rawData[e as keyof typeof rawData]?.value || "N/A";
 
-          arenaData.push({ name: name, value: value });
+          arenaDataRaw.push({ name: name, value: value });
         });
 
-        console.log(generalData, statistics, allData, arenaData);
+      setGeneralData(generalDataRaw);
+      setStatistics(statisticsRaw);
+      setAllData(allDataRaw);
+      setArenaData(arenaDataRaw);
 
-      setIsLoading(false);
+      let timer: ReturnType<typeof setTimeout>;
+      if (rawData?.isDummy?.value != "true") {
+        timer = setTimeout(() => {
+          setIsLoading(false);
+        }, 300);
+      }
+
+      return () => clearTimeout(timer);
     }
-  }, []);
+  }, [rawData, viewMode]);
 
   // Show loading sceen
   if (isLoading) {
@@ -330,15 +374,18 @@ const Stats = (props: Props) => {
     <div>
       <NavBar searchBar />
       <motion.div
-        className="mt-20 md:mt-11 xl:mt-12 dark:text-white select-none"
+        className="mt-[5.5rem] md:mt-12 xl:mt-14 mb-11 dark:text-white select-none flex flex-col items-center gap-5"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.25 }}
       >
-        {/* TODO: Pass data down to stat viewers */}
+        <StatBlock title="GENERAL" data={generalData} />
+        <StatBlock title="STATISTICS" data={statistics} />
+        <StatBlock title="ALL DATA" data={allData} />
+        <StatBlock title="GAMES PLAYED IN ARENA" data={arenaData} list />
+        {/* TODO: Mode button */}
       </motion.div>
-      {/* TODO: Mode button */}
     </div>
   );
 };

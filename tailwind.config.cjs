@@ -2,7 +2,16 @@
 module.exports = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: { colors: { "theme-bg": "#D9D9D9", "theme-accent": "#FF1454", "theme-accent-dark": "#BE1E4A" } },
+    extend: {
+      colors: {
+        "theme-bg": "#D9D9D9",
+        "theme-accent": "#FF1454",
+        "theme-accent-dark": "#BE1E4A",
+        "theme-bg-dark": "#222222",
+        "theme-bg-accent-dark": "#23272A",
+        "theme-bg-accent-light": "#f3f3f3",
+      },
+    },
   },
   plugins: [],
   darkMode: "class",

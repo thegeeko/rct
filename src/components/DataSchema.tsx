@@ -1,5 +1,8 @@
 const DataSchema = () => {
   const schema = {
+    isDummy: {
+      value: "true",
+    },
     "Distance7000REPLACE.gamemodeid.QuickMatch": {
       value: "1231.1058",
       startDate: "2021-12-15T00:00:00.216Z",
