@@ -18,6 +18,7 @@ interface Item {
 
 const Stats = (props: Props) => {
   const [isLoading, setIsLoading] = useState(true);
+  const [info, setInfo] = useState({ title: "Loading", subtitle: "Loading" });
 
   const [generalData, setGeneralData] = useState<Item[]>([
     { name: "LOADING", value: "LOADING" },
@@ -51,13 +52,13 @@ const Stats = (props: Props) => {
   }
 
   useEffect(() => {
+    setInfo({ title: username, subtitle: platform });
     // Fetch data
     const fetchData = async () => {
       Axios.get(import.meta.env.VITE_API_URL, {
         params: { username: username, platform: platform },
       })
         .then((response) => {
-          console.log(response.data.stats);
           setRawData(response.data.stats);
         })
         .catch((error) => {
@@ -353,7 +354,7 @@ const Stats = (props: Props) => {
       if (rawData?.isDummy?.value != "true") {
         timer = setTimeout(() => {
           setIsLoading(false);
-        }, 300);
+        }, 500);
       }
 
       return () => clearTimeout(timer);
@@ -370,21 +371,75 @@ const Stats = (props: Props) => {
     );
   }
 
+  const changeViewMode = (mode: string) => {
+    localStorage.setItem("viewMode", mode);
+    setViewMode(mode);
+  };
+
   return (
     <div>
       <NavBar searchBar />
       <motion.div
-        className="mt-[5.5rem] md:mt-12 xl:mt-14 mb-11 dark:text-white select-none flex flex-col items-center gap-5"
+        className="mt-[5.5rem] md:mt-12 xl:mt-14 mb-20 dark:text-white select-none flex flex-col items-center gap-5"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.25 }}
       >
-        <StatBlock title="GENERAL" data={generalData} />
+        <StatBlock title="GENERAL" data={generalData} info={info} />
         <StatBlock title="STATISTICS" data={statistics} />
         <StatBlock title="ALL DATA" data={allData} />
         <StatBlock title="GAMES PLAYED IN ARENA" data={arenaData} list />
-        {/* TODO: Mode button */}
+        <div className="fixed flex flex-row justify-evenly bg-theme-bg-accent-dark dark:bg-gray-300 text-white dark:text-black shadow-lg gap-2 p-1 rounded-md ease-in-out duration-200 top-[90%] w-60 text-xs md:w-72 md:text-sm">
+          <button
+            className={
+              viewMode == "Global"
+                ? "ease-in-out duration-200 px-1 bg-white rounded-md text-black dark:bg-theme-bg-accent-dark dark:text-white"
+                : ""
+            }
+            onClick={() => {
+              changeViewMode("Global");
+            }}
+          >
+            GLOBAL
+          </button>
+          <button
+            className={
+              viewMode == "Ranked"
+                ? "ease-in-out duration-200 px-1 bg-white rounded-md text-black dark:bg-theme-bg-accent-dark dark:text-white"
+                : ""
+            }
+            onClick={() => {
+              changeViewMode("Ranked");
+            }}
+          >
+            RANKED
+          </button>
+          <button
+            className={
+              viewMode == "QuickMatch"
+                ? "ease-in-out duration-200 px-1 bg-white rounded-md text-black dark:bg-theme-bg-accent-dark dark:text-white"
+                : ""
+            }
+            onClick={() => {
+              changeViewMode("QuickMatch");
+            }}
+          >
+            QUICK
+          </button>
+          <button
+            className={
+              viewMode == "Exotic"
+                ? "ease-in-out duration-200 px-1 bg-white rounded-md text-black dark:bg-theme-bg-accent-dark dark:text-white"
+                : ""
+            }
+            onClick={() => {
+              changeViewMode("Exotic");
+            }}
+          >
+            SPECIAL
+          </button>
+        </div>
       </motion.div>
     </div>
   );
