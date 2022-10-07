@@ -8,7 +8,7 @@ const Button = (props: Params) => {
   return (
     <button
       className={
-        "bg-theme-accent hover:bg-theme-accent-dark ease-in-out duration-200 w-36 h-12 2xl:h-16 2xl:w-48 rounded-xl text-white font-bold text-3xl 2xl:text-4xl shadow-lg" +
+        "bg-theme-accent hover:bg-theme-accent-dark ease-in-out duration-200 md:px-4 md:py-1 rounded-md text-white font-bold text-xl 2xl:text-2xl shadow-lg" +
         " " +
         props.className
       }

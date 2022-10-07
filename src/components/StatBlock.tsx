@@ -11,10 +11,12 @@ interface Props {
 }
 
 const StatBlock = (props: Props) => {
+  // Convert console to name
   let consoleName = "PC";
   if (props.info?.subtitle == "psn") consoleName = "Playstation";
   else if (props.info?.subtitle == "xbl") consoleName = "Xbox";
   else if (props.info?.subtitle == "switch") consoleName = "Switch";
+
   return !props.list ? (
     <div className="w-60 md:w-96 xl:w-3/4">
       <div className="rounded-t-md h-6 bg-theme-accent px-3 font-bold !text-white">
@@ -49,7 +51,7 @@ const StatBlock = (props: Props) => {
       </div>
       <div className="select-text bg-theme-bg-accent-light dark:bg-theme-bg-accent-dark p-6 rounded-b-md grid gap-4 grid-cols-1 text-left">
         {props.data.map((e: Item, i) => {
-          if (i % 2 == 0) {
+          if (i % 2 == 1) {
             return (
               <div
                 key={e.name}

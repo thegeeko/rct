@@ -71,7 +71,7 @@ const Navbar = (props: Props) => {
         />
         <Button
           type="submit"
-          className="rounded-l-none !w-3/12 m-0 !h-6 rounded-r-lg !text-lg !leading-none !shadow-none"
+          className="rounded-l-none m-0 !h-6 rounded-r-md !text-sm !leading-none !shadow-none"
         >
           ROLL
         </Button>

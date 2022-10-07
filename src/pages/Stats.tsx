@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import Axios from "axios";
 import DataSchema from "../components/DataSchema";
 import StatBlock from "../components/StatBlock";
+import format from "format-number";
 
 interface Props {
   setErrorState(error: string): void;
@@ -17,6 +18,8 @@ interface Item {
 }
 
 const Stats = (props: Props) => {
+  const localeFormat = format();
+
   const [isLoading, setIsLoading] = useState(true);
   const [info, setInfo] = useState({ title: "Loading", subtitle: "Loading" });
 
@@ -34,9 +37,7 @@ const Stats = (props: Props) => {
   ]);
 
   const [rawData, setRawData] = useState(DataSchema);
-  const [viewMode, setViewMode] = useState(
-    localStorage.getItem("viewMode") || "Ranked"
-  );
+  const [viewMode, setViewMode] = useState("Ranked");
 
   const navigate = useNavigate();
 
@@ -54,6 +55,7 @@ const Stats = (props: Props) => {
   useEffect(() => {
     // Fetch data
     setIsLoading(true);
+    setViewMode("Ranked");
     const fetchData = async () => {
       Axios.get(import.meta.env.VITE_API_URL, {
         params: { username: username, platform: platform },
@@ -81,11 +83,12 @@ const Stats = (props: Props) => {
       generalDataRaw.push(
         {
           name: "SKILL RATING",
-          value: rawData.tsrmeandef?.value.toLocaleString() || "N/A",
+          value: localeFormat(Number(rawData.tsrmeandef?.value)) || "N/A",
         },
         {
           name: "TOTAL FANS",
-          value: rawData.progressionTotalFans?.value.toLocaleString() || "N/A",
+          value:
+            localeFormat(Number(rawData.progressionTotalFans?.value)) || "N/A",
         },
         {
           name: "TOTAL PLAYTIME",
@@ -243,7 +246,7 @@ const Stats = (props: Props) => {
       allDataRaw.push(
         {
           name: "MMR",
-          value: rawData[mmrName]?.value.toLocaleString() || "N/A",
+          value: localeFormat(Number(rawData[mmrName]?.value)) || "N/A",
         },
         {
           name: "PLAYTIME",
@@ -253,76 +256,78 @@ const Stats = (props: Props) => {
         },
         {
           name: "COSMETIC ITEMS",
-          value: rawData[collectName]?.value.toLocaleString() || "N/A",
+          value: rawData[collectName]?.value || "N/A",
         },
         {
           name: "SPONSER CONTRACTS COMPLETED",
-          value: rawData[contractName]?.value.toLocaleString() || "N/A",
+          value: rawData[contractName]?.value || "N/A",
         },
         {
           name: "MATCHES PLAYED",
-          value: rawData[matchName]?.value.toLocaleString() || "N/A",
+          value: localeFormat(Number(rawData[matchName]?.value)) || "N/A",
         },
         {
           name: "MATCHES WON",
-          value: rawData[resultWinName]?.value.toLocaleString() || "N/A",
+          value: localeFormat(Number(rawData[resultWinName]?.value)) || "N/A",
         },
         {
           name: "MATCHES LOST",
           value:
-            (
-              Number(rawData[matchName]?.value) -
-              Number(rawData[resultWinName]?.value) -
-              Number(rawData[resultDrawName]?.value || "0")
-            ).toLocaleString() || "N/A",
+            localeFormat(
+              Number(
+                Number(rawData[matchName]?.value) -
+                  Number(rawData[resultWinName]?.value) -
+                  Number(rawData[resultDrawName]?.value || "0")
+              )
+            ) || "N/A",
         },
         {
           name: "DRAWS",
-          value: rawData[resultDrawName]?.value.toLocaleString() || "N/A",
+          value: localeFormat(Number(rawData[resultDrawName]?.value)) || "N/A",
         },
         {
           name: "GOALS",
-          value: rawData[goalName]?.value.toLocaleString() || "N/A",
+          value: localeFormat(Number(rawData[goalName]?.value)) || "N/A",
         },
         {
           name: "1PT GOALS",
-          value: rawData[onePointName]?.value.toLocaleString() || "N/A",
+          value: localeFormat(Number(rawData[onePointName]?.value)) || "N/A",
         },
         {
           name: "3PT GOALS",
-          value: rawData[threePointName]?.value.toLocaleString() || "N/A",
+          value: localeFormat(Number(rawData[threePointName]?.value)) || "N/A",
         },
         {
           name: "5PT GOALS",
-          value: rawData[fivePointName]?.value.toLocaleString() || "N/A",
+          value: localeFormat(Number(rawData[fivePointName]?.value)) || "N/A",
         },
         {
           name: "SUCCESSFUL PASSES",
-          value: rawData[passName]?.value.toLocaleString() || "N/A",
+          value: localeFormat(Number(rawData[passName]?.value)) || "N/A",
         },
         {
           name: "SUCCESSFUL TACKLES",
-          value: rawData[tackleName]?.value.toLocaleString() || "N/A",
+          value: localeFormat(Number(rawData[tackleName]?.value)) || "N/A",
         },
         {
           name: "DODGES",
-          value: rawData[dodgeName]?.value.toLocaleString() || "N/A",
+          value: localeFormat(Number(rawData[dodgeName]?.value)) || "N/A",
         },
         {
           name: "STUNS (TACKLES RECEIVED)",
-          value: rawData[stunName]?.value.toLocaleString() || "N/A",
+          value: localeFormat(Number(rawData[stunName]?.value)) || "N/A",
         },
         {
           name: "EMOTES DONE",
-          value: rawData[emoteName]?.value.toLocaleString() || "N/A",
+          value: localeFormat(Number(rawData[emoteName]?.value)) || "N/A",
         },
         {
           name: "GATES PASSED",
-          value: rawData[gateName]?.value.toLocaleString() || "N/A",
+          value: localeFormat(Number(rawData[gateName]?.value)) || "N/A",
         },
         {
           name: "DISTANCE TRAVELLED",
-          value: rawData[distanceName]?.value.toLocaleString() || "N/A",
+          value: localeFormat(Number(rawData[distanceName]?.value)) || "N/A",
         }
       );
 
@@ -373,7 +378,6 @@ const Stats = (props: Props) => {
   }
 
   const changeViewMode = (mode: string) => {
-    localStorage.setItem("viewMode", mode);
     setViewMode(mode);
   };
 
@@ -381,7 +385,7 @@ const Stats = (props: Props) => {
     <div>
       <NavBar searchBar />
       <motion.div
-        className="mt-[5.5rem] md:mt-12 xl:mt-14 mb-20 dark:text-white select-none flex flex-col items-center gap-5"
+        className="mt-[5.5rem] md:mt-12 xl:mt-14 mb-16 dark:text-white select-none flex flex-col items-center gap-5"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
@@ -391,7 +395,7 @@ const Stats = (props: Props) => {
         <StatBlock title="STATISTICS" data={statistics} />
         <StatBlock title="ALL DATA" data={allData} />
         <StatBlock title="GAMES PLAYED IN ARENA" data={arenaData} list />
-        <div className="fixed flex flex-row justify-evenly bg-black dark:bg-gray-300 text-white dark:text-black shadow-lg gap-2 p-1 rounded-md ease-in-out duration-200 top-[90%] w-60 text-xs md:w-72 md:text-sm">
+        <div className="fixed flex flex-row justify-evenly bg-black dark:bg-gray-300 text-white dark:text-black shadow-lg gap-2 p-1 rounded-md ease-in-out duration-200 top-[92%] h-9 md:h-7 md:top-[90%] w-60 text-xs md:w-72 md:text-sm">
           <button
             className={
               viewMode == "Global"
