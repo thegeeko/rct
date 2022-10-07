@@ -52,13 +52,14 @@ const Stats = (props: Props) => {
   }
 
   useEffect(() => {
-    setInfo({ title: username, subtitle: platform });
     // Fetch data
+    setIsLoading(true);
     const fetchData = async () => {
       Axios.get(import.meta.env.VITE_API_URL, {
         params: { username: username, platform: platform },
       })
         .then((response) => {
+          setInfo(response.data.info);
           setRawData(response.data.stats);
         })
         .catch((error) => {
@@ -67,7 +68,7 @@ const Stats = (props: Props) => {
         });
     };
     fetchData();
-  }, []);
+  }, [searchParams.get("username"), searchParams.get("platform")]);
 
   useEffect(() => {
     // Init vars
@@ -390,11 +391,11 @@ const Stats = (props: Props) => {
         <StatBlock title="STATISTICS" data={statistics} />
         <StatBlock title="ALL DATA" data={allData} />
         <StatBlock title="GAMES PLAYED IN ARENA" data={arenaData} list />
-        <div className="fixed flex flex-row justify-evenly bg-theme-bg-accent-dark dark:bg-gray-300 text-white dark:text-black shadow-lg gap-2 p-1 rounded-md ease-in-out duration-200 top-[90%] w-60 text-xs md:w-72 md:text-sm">
+        <div className="fixed flex flex-row justify-evenly bg-black dark:bg-gray-300 text-white dark:text-black shadow-lg gap-2 p-1 rounded-md ease-in-out duration-200 top-[90%] w-60 text-xs md:w-72 md:text-sm">
           <button
             className={
               viewMode == "Global"
-                ? "ease-in-out duration-200 px-1 bg-white rounded-md text-black dark:bg-theme-bg-accent-dark dark:text-white"
+                ? "ease-in-out duration-200 px-1 bg-theme-accent rounded-md text-white font-bold"
                 : ""
             }
             onClick={() => {
@@ -406,7 +407,7 @@ const Stats = (props: Props) => {
           <button
             className={
               viewMode == "Ranked"
-                ? "ease-in-out duration-200 px-1 bg-white rounded-md text-black dark:bg-theme-bg-accent-dark dark:text-white"
+                ? "ease-in-out duration-200 px-1 bg-theme-accent rounded-md text-white font-bold"
                 : ""
             }
             onClick={() => {
@@ -418,7 +419,7 @@ const Stats = (props: Props) => {
           <button
             className={
               viewMode == "QuickMatch"
-                ? "ease-in-out duration-200 px-1 bg-white rounded-md text-black dark:bg-theme-bg-accent-dark dark:text-white"
+                ? "ease-in-out duration-200 px-1 bg-theme-accent rounded-md text-white font-bold"
                 : ""
             }
             onClick={() => {
@@ -430,7 +431,7 @@ const Stats = (props: Props) => {
           <button
             className={
               viewMode == "Exotic"
-                ? "ease-in-out duration-200 px-1 bg-white rounded-md text-black dark:bg-theme-bg-accent-dark dark:text-white"
+                ? "ease-in-out duration-200 px-1 bg-theme-accent rounded-md text-white font-bold"
                 : ""
             }
             onClick={() => {

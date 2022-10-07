@@ -21,14 +21,12 @@ const StatBlock = (props: Props) => {
         {props.title}
       </div>
       <div className="flex flex-col">
-        <div className="flex flex-col px-8 pt-4 bg-theme-bg-accent-light dark:bg-theme-bg-accent-dark">
-          {props.info && (
-            <>
-              <div className="text-md font-semibold">{props.info.title}</div>
-              <div className="text-sm text-gray-400">{consoleName}</div>
-            </>
-          )}
-        </div>
+        {props.info && (
+          <div className="flex flex-col px-8 pt-4 bg-theme-bg-accent-light dark:bg-theme-bg-accent-dark">
+            <div className="text-md font-semibold">{props.info.title}</div>
+            <div className="text-sm text-gray-400">{consoleName}</div>
+          </div>
+        )}
         <div className="select-text bg-theme-bg-accent-light dark:bg-theme-bg-accent-dark p-6 rounded-b-md grid gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
           {props.data.map((e: Item) => {
             return (
