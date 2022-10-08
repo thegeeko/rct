@@ -60,7 +60,7 @@ const Home = (props: Props) => {
             />
             <Select label="Platform" onErrorRemove={props.setErrorState} />
           </div>
-          <Button type="submit">ROLL</Button>
+          <Button className="px-4 py-1" type="submit">ROLL</Button>
         </motion.div>
       </form>
     </>
