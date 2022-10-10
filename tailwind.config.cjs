@@ -10,6 +10,7 @@ module.exports = {
         "theme-bg-dark": "#222222",
         "theme-bg-accent-dark": "#23272A",
         "theme-bg-accent-light": "#f3f3f3",
+        "theme-bg-accent-dark-alt": "#1b1b1b",
       },
     },
   },

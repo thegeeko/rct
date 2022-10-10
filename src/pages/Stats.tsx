@@ -7,6 +7,7 @@ import Axios from "axios";
 import DataSchema from "../components/DataSchema";
 import StatBlock from "../components/StatBlock";
 import format from "format-number";
+import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from "recharts";
 
 interface Props {
   setErrorState(error: string): void;
@@ -351,6 +352,19 @@ const Stats = (props: Props) => {
           arenaDataRaw.push({ name: name, value: value });
         });
 
+      const pieChartData = [
+        { name: "Wins", value: Number(rawData[resultWinName]?.value) },
+        {
+          name: "Losses",
+          value: Number(
+            Number(rawData[matchName]?.value) -
+              Number(rawData[resultWinName]?.value) -
+              Number(rawData[resultDrawName]?.value || "0")
+          ),
+        },
+      ];
+      const pieChartColors = ['#0000FF', '#FF0000'];
+
       setGeneralData(generalDataRaw);
       setStatistics(statisticsRaw);
       setAllData(allDataRaw);
@@ -385,17 +399,30 @@ const Stats = (props: Props) => {
     <div>
       <NavBar searchBar />
       <motion.div
-        className="mt-[5.5rem] md:mt-12 xl:mt-14 mb-16 dark:text-white select-none flex flex-col items-center gap-5"
+        className="mt-[5.5rem] md:mt-12 xl:mt-14 mb-16 dark:text-white select-none flex flex-col md:flex-row justify-center gap-5"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.25 }}
       >
-        <StatBlock title="GENERAL" data={generalData} info={info} />
-        <StatBlock title="STATISTICS" data={statistics} />
-        <StatBlock title="ALL DATA" data={allData} />
-        <StatBlock title="GAMES PLAYED IN ARENA" data={arenaData} list />
-        <div className="fixed flex flex-row justify-evenly bg-black dark:bg-gray-300 text-white dark:text-black shadow-lg gap-2 p-1 rounded-md ease-in-out duration-200 top-[92%] h-9 md:h-7 md:top-[90%] w-60 text-xs md:w-72 md:text-sm">
+        <div className="w-full basis-1/3 flex flex-col items-center">
+          <StatBlock
+            title="GENERAL"
+            data={generalData}
+            info={info}
+            direction="row"
+          />
+        </div>
+        <div className="basis-2/3  flex flex-col gap-5 items-center">
+
+          
+
+          <StatBlock title="STATISTICS" data={statistics} />
+          <StatBlock title="ALL DATA" data={allData} />
+          <StatBlock title="GAMES PLAYED IN ARENA" data={arenaData} list />
+        </div>
+
+        <div className="self-center fixed flex flex-row justify-evenly bg-black dark:bg-gray-300 text-white dark:text-black shadow-lg gap-2 p-1 rounded-md ease-in-out duration-200 top-[92%] h-9 md:h-8 md:top-[90%] w-60 text-xs md:w-72 md:text-sm">
           <button
             className={
               viewMode == "Global"
