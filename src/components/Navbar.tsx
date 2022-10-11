@@ -85,7 +85,7 @@ const Navbar = (props: Props) => {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.25 }}
-      className="md:hidden w-full bg-gray-900 dark:bg-gray-300 ease-in-out duration-200 shadow-md h-9 lg:h-10 xl:h-12 fixed top-9 lg:top-10 xl:top-12 left-0 flex flex-row justify-center items-center text-white font-bold px-2 md:px-4 lg:px-10 text-xl select-none"
+      className="md:hidden w-full bg-gray-900 dark:bg-gray-300 ease-in-out duration-200 shadow-md h-9 lg:h-10 xl:h-12 fixed top-9 lg:top-10 xl:top-12 left-0 flex flex-row justify-center items-center text-white font-bold px-2 md:px-4 lg:px-10 text-xl select-none z-50"
     >
       <form onSubmit={submitHandler}>
         <div className="flex flex-row gap-0 w-full justify-center">
@@ -111,7 +111,7 @@ const Navbar = (props: Props) => {
 
   return (
     <>
-      <div className="w-full bg-black dark:bg-white shadow-md h-9 fixed top-0 left-0 flex flex-row items-center text-white font-bold px-4 md:px-6 lg:px-16 text-xl justify-between select-none">
+      <div className="w-full bg-black dark:bg-white shadow-md h-9 fixed top-0 left-0 flex flex-row items-center text-white font-bold px-4 md:px-6 lg:px-16 text-xl justify-between select-none z-50">
         <div>
           <Link
             to="/"

@@ -7,7 +7,6 @@ import Axios from "axios";
 import DataSchema from "../components/DataSchema";
 import StatBlock from "../components/StatBlock";
 import format from "format-number";
-import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from "recharts";
 
 interface Props {
   setErrorState(error: string): void;
@@ -352,19 +351,6 @@ const Stats = (props: Props) => {
           arenaDataRaw.push({ name: name, value: value });
         });
 
-      const pieChartData = [
-        { name: "Wins", value: Number(rawData[resultWinName]?.value) },
-        {
-          name: "Losses",
-          value: Number(
-            Number(rawData[matchName]?.value) -
-              Number(rawData[resultWinName]?.value) -
-              Number(rawData[resultDrawName]?.value || "0")
-          ),
-        },
-      ];
-      const pieChartColors = ['#0000FF', '#FF0000'];
-
       setGeneralData(generalDataRaw);
       setStatistics(statisticsRaw);
       setAllData(allDataRaw);
@@ -410,14 +396,18 @@ const Stats = (props: Props) => {
             title="GENERAL"
             data={generalData}
             info={info}
-            direction="row"
+            direction="col"
           />
         </div>
         <div className="basis-2/3  flex flex-col gap-5 items-center">
-
-          
-
-          <StatBlock title="STATISTICS" data={statistics} />
+          <StatBlock
+            title="STATISTICS"
+            data={statistics}
+            chart={[
+              allData.find((o) => o.name == "MATCHES WON"),
+              allData.find((o) => o.name == "MATCHES PLAYED"),
+            ]}
+          />
           <StatBlock title="ALL DATA" data={allData} />
           <StatBlock title="GAMES PLAYED IN ARENA" data={arenaData} list />
         </div>
