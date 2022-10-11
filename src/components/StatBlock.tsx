@@ -35,8 +35,8 @@ const StatBlock = (props: Props) => {
   let lossCount;
 
   if (props.chart) {
-    winCount = Number(props.chart[0].value);
-    playCount = Number(props.chart[1].value);
+    winCount = Number(props.chart[0].value.replace(",", ""));
+    playCount = Number(props.chart[1].value.replace(",", ""));
     lossCount = playCount - winCount;
     pieChartData = [
       {
