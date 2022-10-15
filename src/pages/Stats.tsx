@@ -7,6 +7,7 @@ import Axios from "axios";
 import DataSchema from "../components/DataSchema";
 import StatBlock from "../components/StatBlock";
 import format from "format-number";
+import { Helmet } from "react-helmet";
 
 interface Props {
   setErrorState(error: string): void;
@@ -383,6 +384,16 @@ const Stats = (props: Props) => {
 
   return (
     <div>
+      <Helmet>
+        <meta
+          property="og:title"
+          content={`${username} - Roller Champions Tracker`}
+        />
+        <meta
+          property="og:description"
+          content={`Roller Champions Stats for ${username} on ${platform}`}
+        />
+      </Helmet>
       <NavBar searchBar />
       <motion.div
         className="mt-[5.5rem] md:mt-12 xl:mt-14 mb-16 dark:text-white select-none flex flex-col md:flex-row justify-center gap-5"
