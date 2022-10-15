@@ -4,6 +4,7 @@ import Input from "../components/Input";
 import Select from "../components/Select";
 import Button from "../components/Button";
 import NavBar from "../components/Navbar";
+import { Helmet } from "react-helmet";
 
 interface Props {
   errorState?: string;
@@ -30,6 +31,9 @@ const Home = (props: Props) => {
 
   return (
     <>
+      <Helmet>
+        <title>RCT</title>
+      </Helmet>
       <NavBar />
       <form onSubmit={submitHandler}>
         <motion.div
@@ -60,7 +64,12 @@ const Home = (props: Props) => {
             />
             <Select label="Platform" onErrorRemove={props.setErrorState} />
           </div>
-          <Button className="px-4 py-1 2xl:px-6 2xl:py-3 2xl:text-3xl" type="submit">ROLL</Button>
+          <Button
+            className="px-4 py-1 2xl:px-6 2xl:py-3 2xl:text-3xl"
+            type="submit"
+          >
+            ROLL
+          </Button>
         </motion.div>
       </form>
     </>
