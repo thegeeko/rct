@@ -386,11 +386,7 @@ const Stats = (props: Props) => {
     <div>
       <Helmet>
         <meta
-          property="og:title"
-          content={`${username} - Roller Champions Tracker`}
-        />
-        <meta
-          property="og:description"
+          name={`${username} - Roller Champions Tracker`}
           content={`Roller Champions Stats for ${username} on ${platform}`}
         />
       </Helmet>
