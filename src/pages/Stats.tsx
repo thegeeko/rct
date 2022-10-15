@@ -385,6 +385,14 @@ const Stats = (props: Props) => {
   return (
     <div>
       <Helmet>
+        <meta
+          property="og:title"
+          content={`${username} - Roller Champions Tracker`}
+        />
+        <meta
+          property="og:description"
+          content={`Roller Champions Stats for ${username} on ${platform}`}
+        />
         <title>{`RCT - ${username}`}</title>
       </Helmet>
       <NavBar searchBar />
