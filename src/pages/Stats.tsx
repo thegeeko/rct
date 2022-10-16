@@ -8,6 +8,7 @@ import DataSchema from "../components/DataSchema";
 import StatBlock from "../components/StatBlock";
 import format from "format-number";
 import { Helmet } from "react-helmet";
+import GeneralStatBlock from "../components/GeneralStatBlock";
 
 interface Props {
   setErrorState(error: string): void;
@@ -404,11 +405,10 @@ const Stats = (props: Props) => {
         transition={{ duration: 0.25 }}
       >
         <div className="w-full basis-1/3 flex flex-col items-center">
-          <StatBlock
+          <GeneralStatBlock
             title="GENERAL"
             data={generalData}
             info={info}
-            direction="col"
           />
         </div>
         <div className="basis-2/3  flex flex-col gap-5 items-center">
