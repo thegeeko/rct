@@ -35,6 +35,7 @@ const Input = (props: Params) => {
         name="username"
         spellCheck="false"
         autoFocus={props.label ? true : false}
+        autoComplete="on"
         defaultValue={localStorage.getItem("username") || ""}
         onChange={() => {
           errorRemovalHandler();

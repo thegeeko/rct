@@ -90,17 +90,17 @@ const Navbar = (props: Props) => {
       <form onSubmit={submitHandler}>
         <div className="flex flex-row gap-0 w-full justify-center">
           <Select
-            className="rounded-r-none h-6 font-normal 2xl:h-8 text-black !text-xs !shadow-none !px-1 text-center border-r-white"
+            className="rounded-r-none !h-6 font-normal 2xl:h-8 text-black !text-xs !shadow-none !px-1 text-center border-r-white"
             divClassName="!w-2/12 text-center"
           />
           <Input
             placeHolder="Username"
-            className="rounded-none h-6 font-normal 2xl:h-8 text-black !shadow-none !text-base !px-1 border-l-white"
+            className="rounded-none !h-6 font-normal 2xl:h-8 text-black !shadow-none !text-base !px-1 border-l-white"
             divClassName="!w-5/12"
           />
           <Button
             type="submit"
-            className="rounded-l-none h-6 2xl:h-8 !w-2/12 m-0 rounded-r-md !shadow-none !text-sm !leading-none"
+            className="rounded-l-none !h-6 2xl:h-8 !w-2/12 m-0 rounded-r-md !shadow-none !text-sm !leading-none"
           >
             ROLL
           </Button>
