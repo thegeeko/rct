@@ -369,7 +369,7 @@ const Stats = (props: Props) => {
 
       return () => clearTimeout(timer);
     }
-  }, [rawData, viewMode]);
+  }, [rawData, viewMode, localeFormat]);
 
   // Show loading sceen
   if (isLoading) {
