@@ -18,8 +18,8 @@ const Navbar = (props: Props) => {
   const router = useRouter();
 
   // Check if darkMode is supposed to be on by checking settings in localStorage
-  let mainDiv;
-  if (typeof window !== "undefined") {
+  let mainDiv: HTMLElement | null;
+  if (typeof window != "undefined") {
     mainDiv = document.getElementById("main");
     if (localStorage.getItem("darkMode") == "false") {
       mainDiv?.classList.remove("dark");
