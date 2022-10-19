@@ -1,10 +1,8 @@
-import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import Input from "../components/Input";
-import Select from "../components/Select";
-import Button from "../components/Button";
-import NavBar from "../components/Navbar";
-import { Helmet } from "react-helmet";
+import Input from "../../../components/Input";
+import Select from "../../../components/Select";
+import Button from "../../../components/Button";
+import NavBar from "../../../components/Navbar";
 
 interface Props {
   errorState?: string;
@@ -31,9 +29,6 @@ const Home = (props: Props) => {
 
   return (
     <>
-      <Helmet>
-        <title>RCT</title>
-      </Helmet>
       <NavBar />
       <form onSubmit={submitHandler}>
         <motion.div

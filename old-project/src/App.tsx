@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import Home from "./pages/Home";
-import Stats from "./pages/Stats";
+import Stats from "../../pages/stats";
 
 function App() {
   // ErrorState management

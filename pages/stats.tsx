@@ -1,5 +1,6 @@
+import Head from "next/head";
 import { useState, useEffect } from "react";
-import { useSearchParams, Navigate, useNavigate } from "react-router-dom";
+import { useRouter } from "next/router";
 import LoadingScreen from "../components/LoadingScreen";
 import NavBar from "../components/Navbar";
 import { motion } from "framer-motion";
@@ -7,7 +8,6 @@ import Axios from "axios";
 import DataSchema from "../components/DataSchema";
 import StatBlock from "../components/StatBlock";
 import format from "format-number";
-import { Helmet } from "react-helmet";
 import GeneralStatBlock from "../components/GeneralStatBlock";
 
 interface Props {
@@ -41,17 +41,17 @@ const Stats = (props: Props) => {
   const [rawData, setRawData] = useState(DataSchema);
   const [viewMode, setViewMode] = useState("Ranked");
 
-  const navigate = useNavigate();
+  const router = useRouter();
 
   // Get data from URL search parameters
-  const [searchParams] = useSearchParams();
-  const username = searchParams.get("username");
-  const platform = searchParams.get("platform");
+  const searchParams = router.query;
+  const username = searchParams["username"];
+  const platform = searchParams["platform"];
 
   // Redirect to home if parameters are not provided
   if (!username || !platform) {
     props.setErrorState("Please input username and platform");
-    return <Navigate to="/" />;
+    router.push("/");
   }
 
   useEffect(() => {
@@ -59,20 +59,22 @@ const Stats = (props: Props) => {
     setIsLoading(true);
     setViewMode("Ranked");
     const fetchData = async () => {
-      Axios.get(import.meta.env.VITE_API_URL, {
-        params: { username: username, platform: platform },
-      })
-        .then((response) => {
-          setInfo(response.data.info);
-          setRawData(response.data.stats);
+      if (process.env.API_URL) {
+        Axios.get(process.env.API_URL, {
+          params: { username: username, platform: platform },
         })
-        .catch((error) => {
-          props.setErrorState(error.response.data.error);
-          navigate("/");
-        });
+          .then((response) => {
+            setInfo(response.data.info);
+            setRawData(response.data.stats);
+          })
+          .catch((error) => {
+            props.setErrorState(error.response.data.error);
+            router.push("/");
+          });
+      }
     };
-    fetchData();
-  }, [searchParams.get("username"), searchParams.get("platform")]);
+    if (process.env.API_URL) fetchData();
+  }, [searchParams["username"], searchParams["platform"]]);
 
   useEffect(() => {
     // Init vars
@@ -385,17 +387,26 @@ const Stats = (props: Props) => {
 
   return (
     <div>
-      <Helmet>
+      {" "}
+      <Head>
+        <title>{`RCT - ${username}`}</title>
         <meta
-          property="og:title"
-          content={`${username} - Roller Champions Tracker`}
+          name="Roller Champions Tracker"
+          content="Stats tracker for Roller Champions"
+        />
+        <meta property="og:title" content="Roller Champions Tracker" />
+        <meta
+          property="og:image"
+          content="https://rctgg.vercel.app/cover.png"
         />
         <meta
           property="og:description"
-          content={`Roller Champions Stats for ${username} on ${platform}`}
+          content="Stats tracker for Roller Champions"
         />
-        <title>{`RCT - ${username}`}</title>
-      </Helmet>
+        <meta property="og:url" content="https://rctgg.vercel.app" />
+        <meta property="og:type" content="website" />
+        <link rel="icon" href="/skate.svg" />
+      </Head>
       <NavBar searchBar />
       <motion.div
         className="mt-[5.5rem] md:mt-12 xl:mt-14 mb-16 dark:text-white select-none flex flex-col md:flex-row justify-center gap-5"
@@ -405,11 +416,7 @@ const Stats = (props: Props) => {
         transition={{ duration: 0.25 }}
       >
         <div className="w-full basis-1/3 flex flex-col items-center">
-          <GeneralStatBlock
-            title="GENERAL"
-            data={generalData}
-            info={info}
-          />
+          <GeneralStatBlock title="GENERAL" data={generalData} info={info} />
         </div>
         <div className="basis-2/3  flex flex-col gap-5 items-center">
           <StatBlock

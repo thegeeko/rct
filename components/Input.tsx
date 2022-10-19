@@ -1,14 +1,20 @@
 interface Params {
+  placeHolder?: string;
   label?: string;
   className?: string;
   divClassName?: string;
   onErrorRemove?(error: string): void;
 }
 
-const Select = (props: Params) => {
+const Input = (props: Params) => {
   const errorRemovalHandler = () => {
     if (props.onErrorRemove) props.onErrorRemove("");
   };
+
+  let defaultInput = "";
+  if (typeof window !== "undefined") {
+    defaultInput = localStorage.getItem("username") || "";
+  }
 
   return (
     <div
@@ -23,28 +29,25 @@ const Select = (props: Params) => {
           {props.label}
         </span>
       )}
-
-      <select
+      <input
         className={
           "px-2 md:px-4 text-lg h-8 2xl:h-14 2xl:text-3xl bg-white border outline-none hover:border-theme-accent ease-in-out duration-200" +
           " " +
           props.className
         }
-        name="platform"
-        id="platform"
+        placeholder={props.placeHolder && props.placeHolder}
         required
-        defaultValue={localStorage.getItem("platform") || "uplay"}
+        name="username"
+        spellCheck="false"
+        autoFocus={props.label ? true : false}
+        autoComplete="on"
+        defaultValue={defaultInput}
         onChange={() => {
           errorRemovalHandler();
         }}
-      >
-        <option value="uplay">PC</option>
-        <option value="psn">PS4</option>
-        <option value="xbl">Xbox</option>
-        <option value="switch">Switch</option>
-      </select>
+      ></input>
     </div>
   );
 };
 
-export default Select;
+export default Input;

@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { useRouter } from "next/router";
 import Button from "./Button";
 import MoonIcon from "./DarkModeIcon";
 import GithubIcon from "./GithubIcon";
@@ -14,40 +14,47 @@ interface Props {
 
 const Navbar = (props: Props) => {
   const [darkMode, setDarkMode] = useState("true");
-  const navigate = useNavigate();
+  const router = useRouter();
 
   // Check if darkMode is supposed to be on by checking settings in localStorage
-  const mainDiv = document.getElementById("main");
-  if (localStorage.getItem("darkMode") == "false") {
-    mainDiv?.classList.remove("dark");
-  } else {
-    mainDiv?.classList.add("dark");
+  let mainDiv;
+  if (typeof window !== "undefined") {
+    mainDiv = document.getElementById("main");
+    if (localStorage.getItem("darkMode") == "false") {
+      mainDiv?.classList.remove("dark");
+    } else {
+      mainDiv?.classList.add("dark");
+    }
   }
 
   // Toggle darkMode and save settings in localStorage
   const toggleDarkMode = () => {
-    if (localStorage.getItem("darkMode") == "false") {
-      localStorage.setItem("darkMode", "true");
-    } else {
-      localStorage.setItem("darkMode", "false");
+    if (typeof window !== "undefined") {
+      if (localStorage.getItem("darkMode") == "false") {
+        localStorage.setItem("darkMode", "true");
+      } else {
+        localStorage.setItem("darkMode", "false");
+      }
+      mainDiv?.classList.toggle("dark");
+      setDarkMode(localStorage.getItem("darkMode") || "true");
     }
-    mainDiv?.classList.toggle("dark");
-    setDarkMode(localStorage.getItem("darkMode") || "true");
   };
 
   // Submit handler (save data to localStorage and navigate to stats)
   const submitHandler = (event: React.SyntheticEvent) => {
     event.preventDefault();
-    const data = event.target as typeof event.target & {
-      username: { value: string };
-      platform: { value: string };
-    };
-    localStorage.setItem("username", data.username.value);
-    localStorage.setItem("platform", data.platform.value);
+    if (typeof window !== "undefined") {
+      const data = event.target as typeof event.target & {
+        username: { value: string };
+        platform: { value: string };
+      };
+      localStorage.setItem("username", data.username.value);
+      localStorage.setItem("platform", data.platform.value);
 
-    navigate(
-      `/stats?username=${data.username.value}&platform=${data.platform.value}`
-    );
+      router.push(
+        `/stats?username=${data.username.value}&platform=${data.platform.value}`
+      );
+    }
   };
 
   // Navbar searchbar
@@ -113,15 +120,15 @@ const Navbar = (props: Props) => {
     <>
       <div className="w-full bg-black dark:bg-white shadow-md h-9 fixed top-0 left-0 flex flex-row items-center text-white font-bold px-4 md:px-6 lg:px-16 text-xl justify-between select-none z-50">
         <div>
-          <Link
-            to="/"
+          <a
+            href="/"
             className="ease-in-out duration-200 text-2xl flex flex-row items-center"
           >
             <LogoIcon />
             <span className="dark:text-black ease-in-out duration-200 font-extrabold">
               RCT
             </span>
-          </Link>
+          </a>
         </div>
         <div className="flex flex-row gap-4 items-center">
           {props.searchBar && SearchUtil}
