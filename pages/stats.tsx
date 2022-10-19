@@ -74,7 +74,7 @@ const Stats = (props: Props) => {
       }
     };
     if (process.env.API_URL) fetchData();
-  }, [searchParams["username"], searchParams["platform"]]);
+  }, [username, platform, props, router]);
 
   useEffect(() => {
     // Init vars
