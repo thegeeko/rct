@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { useRouter } from "next/router";
 import Button from "./Button";
@@ -120,15 +121,14 @@ const Navbar = (props: Props) => {
     <>
       <div className="w-full bg-black dark:bg-white shadow-md h-9 fixed top-0 left-0 flex flex-row items-center text-white font-bold px-4 md:px-6 lg:px-16 text-xl justify-between select-none z-50">
         <div>
-          <a
-            href="/"
-            className="ease-in-out duration-200 text-2xl flex flex-row items-center"
-          >
-            <LogoIcon />
-            <span className="dark:text-black ease-in-out duration-200 font-extrabold">
-              RCT
-            </span>
-          </a>
+          <Link href="/">
+            <a className="ease-in-out duration-200 text-2xl flex flex-row items-center">
+              <LogoIcon />
+              <span className="dark:text-black ease-in-out duration-200 font-extrabold">
+                RCT
+              </span>
+            </a>
+          </Link>
         </div>
         <div className="flex flex-row gap-4 items-center">
           {props.searchBar && SearchUtil}
