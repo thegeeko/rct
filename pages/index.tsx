@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { useState } from "react";
 import { useRouter } from "next/router";
 import { motion } from "framer-motion";
 import Input from "../components/Input";
@@ -13,6 +14,8 @@ interface Props {
 
 const Home = (props: Props) => {
   const router = useRouter();
+  const [errorState, setErrorState] = useState(router.query.error);
+  console.log(errorState)
 
   // Submit handler (save data to localStorage and navigate to stats)
   const submitHandler = (event: React.SyntheticEvent) => {
@@ -68,17 +71,17 @@ const Home = (props: Props) => {
             </div>
           </div>
           <div className="flex flex-col items-center gap-6 mx-2">
-            {props.errorState && (
+            {errorState && (
               <div className="text-red-600 self-start text-sm lg:text-lg">
-                {props.errorState}
+                {errorState}
               </div>
             )}
             <Input
               placeHolder="Username"
               label="Username"
-              onErrorRemove={props.setErrorState}
+              onErrorRemove={setErrorState}
             />
-            <Select label="Platform" onErrorRemove={props.setErrorState} />
+            <Select label="Platform" onErrorRemove={setErrorState} />
           </div>
           <Button
             className="px-4 py-1 2xl:px-6 2xl:py-3 2xl:text-3xl"

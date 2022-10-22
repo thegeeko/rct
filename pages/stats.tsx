@@ -50,9 +50,21 @@ const Stats = (props: Props) => {
 
   // Redirect to home if parameters are not provided
   if (!username || !platform) {
-    props.setErrorState("Please input username and platform");
-    router.push("/");
+    // props.setErrorState("Please input username and platform");
+    if (typeof window !== "undefined") {
+      router.push({
+        pathname: "/",
+        query: { error: "Please input username and platform" },
+      });
+    }
   }
+
+  // const username = () => {
+  //   return router.query.username;
+  // }
+  // const platform = () => {
+  //   return router.query.platform;
+  // }
 
   useEffect(() => {
     // Fetch data
@@ -68,13 +80,16 @@ const Stats = (props: Props) => {
             setRawData(response.data.stats);
           })
           .catch((error) => {
-            props.setErrorState(error.response.data.error);
-            router.push("/");
+            // props.setErrorState(error.response.data.error);
+            router.push({
+              pathname: "/",
+              query: { error: error.response.data.error },
+            });
           });
       }
     };
     if (process.env.API_URL) fetchData();
-  }, [username, platform, props, router]);
+  }, [router.query]);
 
   useEffect(() => {
     // Init vars
@@ -369,7 +384,7 @@ const Stats = (props: Props) => {
 
       return () => clearTimeout(timer);
     }
-  }, [rawData, viewMode, localeFormat]);
+  }, [rawData, viewMode]);
 
   // Show loading sceen
   if (isLoading) {
@@ -389,19 +404,19 @@ const Stats = (props: Props) => {
     <div>
       {" "}
       <Head>
-        <title>{`RCT - ${username}`}</title>
+        <title>{`RCT - ${username()}`}</title>
         <meta
-          name="Roller Champions Tracker"
-          content="Stats tracker for Roller Champions"
+          name={`${username()} - RCT`}
+          content={`Roller Champions stats for ${username()}`}
         />
-        <meta property="og:title" content="Roller Champions Tracker" />
+        <meta property="og:title" content={`${username()} - RCT`} />
         <meta
           property="og:image"
           content="https://rctgg.vercel.app/cover.png"
         />
         <meta
           property="og:description"
-          content="Stats tracker for Roller Champions"
+          content={`Roller Champions stats for ${username()}`}
         />
         <meta property="og:url" content="https://rctgg.vercel.app" />
         <meta property="og:type" content="website" />
