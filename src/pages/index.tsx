@@ -74,9 +74,9 @@ const Home = (props: Props) => {
             </div>
           </div>
           <div className="flex flex-col items-center gap-6 mx-2">
-            {props.errorState && (
+            {errorState && (
               <div className="text-red-600 self-start text-sm lg:text-lg">
-                {props.errorState}
+                {errorState}
               </div>
             )}
             <Input
