@@ -21,6 +21,8 @@ interface Item {
 
 const Stats = (props: Props) => {
   const localeFormat = format();
+  const router = useRouter();
+  const {username, platform} = router.query;
 
   const [isLoading, setIsLoading] = useState(true);
   const [info, setInfo] = useState({ title: "Loading", subtitle: "Loading" });
@@ -40,13 +42,6 @@ const Stats = (props: Props) => {
 
   const [rawData, setRawData] = useState(DataSchema);
   const [viewMode, setViewMode] = useState("Ranked");
-
-  const router = useRouter();
-
-  // Get data from URL search parameters
-  const searchParams = router.query;
-  const username = searchParams["username"];
-  const platform = searchParams["platform"];
 
   // Redirect to home if parameters are not provided
   if (!username || !platform) {

@@ -1,27 +1,21 @@
-interface Params {
+interface Params extends React.HTMLProps<HTMLSelectElement> {
   label?: string;
   className?: string;
   divClassName?: string;
   onErrorRemove?(error: string): void;
 }
 
-const Select = (props: Params) => {
+const Select = ({divClassName, onErrorRemove, ...props}: Params) => {
   const errorRemovalHandler = () => {
-    if (props.onErrorRemove) props.onErrorRemove("");
+    if (onErrorRemove) onErrorRemove("");
   };
-
-  let defaultSelect = "";
-  if (typeof window !== "undefined") {
-    defaultSelect = localStorage.getItem("platform") || "uplay";
-  }
-
 
   return (
     <div
       className={
         "flex flex-col w-5/6 sm:w-72 md:w-96 2xl:w-[36rem] gap-1" +
         " " +
-        props.divClassName
+        divClassName
       }
     >
       {props.label && (
@@ -32,17 +26,15 @@ const Select = (props: Params) => {
 
       <select
         className={
-          "px-2 md:px-4 text-lg h-8 2xl:h-14 2xl:text-3xl bg-white border outline-none hover:border-theme-accent ease-in-out duration-200" +
-          " " +
-          props.className
+          "px-2 md:px-4 text-lg h-8 2xl:h-14 2xl:text-3xl bg-white border outline-none hover:border-theme-accent ease-in-out duration-200"
         }
         name="platform"
         id="platform"
         required
-        defaultValue={defaultSelect}
         onChange={() => {
           errorRemovalHandler();
         }}
+        {...props}
       >
         <option value="uplay">PC</option>
         <option value="psn">PS4</option>

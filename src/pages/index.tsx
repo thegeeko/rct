@@ -5,6 +5,7 @@ import Input from "../components/Input";
 import Select from "../components/Select";
 import Button from "../components/Button";
 import NavBar from "../components/Navbar";
+import { useEffect, useState } from "react";
 
 interface Props {
   errorState?: string;
@@ -14,20 +15,25 @@ interface Props {
 const Home = (props: Props) => {
   const router = useRouter();
 
+  const [username, setUsername] = useState("");
+  const [platform, setPlatform] = useState("uplay");
+
   // Submit handler (save data to localStorage and navigate to stats)
   const submitHandler = (event: React.SyntheticEvent) => {
     event.preventDefault();
-    const data = event.target as typeof event.target & {
-      username: { value: string };
-      platform: { value: string };
-    };
-    localStorage.setItem("username", data.username.value);
-    localStorage.setItem("platform", data.platform.value);
+
+    localStorage.setItem("username", username);
+    localStorage.setItem("platform", platform);
 
     router.push(
-      `/stats?username=${data.username.value}&platform=${data.platform.value}`
+      `/stats?username=${username}&platform=${platform}`
     );
   };
+
+  useEffect(() => {
+    setUsername(localStorage.getItem("username") || "");
+    setPlatform(localStorage.getItem("platform") || "uplay");
+  }, []);
 
   return (
     <>
@@ -74,11 +80,18 @@ const Home = (props: Props) => {
               </div>
             )}
             <Input
-              placeHolder="Username"
+              placeholder="Username"
               label="Username"
+              value={username}
+              onChange={e => setUsername(e.currentTarget.value)}
               onErrorRemove={props.setErrorState}
             />
-            <Select label="Platform" onErrorRemove={props.setErrorState} />
+            <Select 
+              label="Platform" 
+              value={platform}
+              onErrorRemove={props.setErrorState}
+              onChange={e => setPlatform(e.currentTarget.value)}
+            />
           </div>
           <Button
             className="px-4 py-1 2xl:px-6 2xl:py-3 2xl:text-3xl"
